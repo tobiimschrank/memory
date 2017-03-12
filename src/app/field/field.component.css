@@ -1,0 +1,28 @@
+.field-wrap .row {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.card {
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+
+    background: lightgray;
+
+    overflow: hidden;
+}
+
+.card img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.opened {
+    background-color: red;
+}

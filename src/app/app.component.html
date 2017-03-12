@@ -1,3 +1,25 @@
-<h1>
-  {{title}}
-</h1>
+<div class="settings" *ngIf="!gameRunning">
+    <div class="error-message" *ngIf="error">
+        {{error}}
+    </div>
+
+    <label for="rows">Zeilen</label>
+    <input type="number" min="2" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
+    <label for="columns">Spalten</label>
+    <input type="number" min="2" [(ngModel)]="columns" id="columns" />
+    <input type="number" min="2" [(ngModel)]="forPair" />
+
+    <button (click)="startGame()">Start!</button>
+</div>
+
+<app-field *ngIf="gameRunning" rows="{{rows}}" columns="{{columns}}">Loading Game</app-field>
+
+<div *ngIf="gameEnded">
+    Spiel vorbei!
+    <div (click)="reset()">
+        Neues Spiel starten?
+    </div>
+    <div (click)="restart()">
+        Neues Spiel mit selben Einstellungen starten?
+    </div>
+</div>
