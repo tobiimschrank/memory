@@ -1,30 +1,41 @@
-import {Component, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {CardService} from './card.service';
 import {Card} from './card';
-import {GameService} from "./game.service";
+import {GameService} from './game.service';
+import {PlayerService} from './player/player.service';
+import {Player} from './player/player';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  playersAtStart = 2;
+
   forPair: number = 2;
   rows: number = 4;
   columns: number = 4;
   cards: Card[];
+  players: Player[] = [];
 
   error: string = null;
 
   gameRunning: boolean = false;
   gameEnded: boolean = false;
 
-  constructor(private cardService: CardService, private gameService: GameService) {
+  constructor(private cardService: CardService, private playerService: PlayerService, private gameService: GameService) {
+  }
+
+  ngOnInit(): void {
+    for (let i = this.playersAtStart; i--;) {
+      this.addPlayer();
+    }
   }
 
   getCards(): void {
-    this.cardService.buildCards(this.forPair, this.rows * this.columns).then(cards => this.cards = cards);
+    this.cardService.buildCards(this.forPair, this.rows * this.columns).then((cards) => this.cards = cards);
   }
 
   startGame() {
@@ -38,7 +49,7 @@ export class AppComponent {
     this.getCards();
     this.gameRunning = true;
 
-    this.gameService.start(this.forPair, this.cardService).then(gameEnded => this.gameEnded = gameEnded);
+    this.gameService.start(this.forPair).then((gameEnded) => this.gameEnded = gameEnded);
   }
 
   reset() {
@@ -49,6 +60,7 @@ export class AppComponent {
     this.gameEnded = false;
     this.gameRunning = false;
 
+    this.playerService.resetPlayers(true);
     this.gameService.reset();
   }
 
@@ -56,7 +68,13 @@ export class AppComponent {
     this.gameEnded = false;
     this.gameRunning = false;
 
+    this.playerService.resetPlayers();
     this.gameService.reset();
     this.startGame();
+  }
+
+  addPlayer(): void {
+    this.playerService.createPlayer('Player ' + (this.players.length + 1));
+    this.players = this.playerService.getPlayers();
   }
 }

@@ -10,9 +10,9 @@
     height: 100px;
     margin: 5px;
 
-    background: lightgray;
-
     overflow: hidden;
+
+    perspective: 1000px;
 }
 
 .card img {
@@ -22,7 +22,51 @@
 
     transform: translate(-50%, -50%);
 }
+/* flip the pane when hovered */
+.card.opened .flipper {
+    transform: rotateY(180deg);
+}
 
-.opened {
-    background-color: red;
+/* flip speed goes here */
+.card .flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+/* hide back of pane during swap */
+.card .back,.card  .front {
+    width: 100%;
+    height: 100%;
+
+    backface-visibility: hidden;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* front pane, placed above back */
+.card .back {
+    z-index: 2;
+    /* for firefox 31 */
+    transform: rotateY(0deg);
+
+    background: lightgray;
+}
+
+/* back, initially hidden pane */
+.card .front {
+    transform: rotateY(180deg);
+
+    background: red;
+    text-align: center;
+
+    font-size: 30px;
+    line-height: 100px;
+    font-weight: bold;
+    color: white;
 }

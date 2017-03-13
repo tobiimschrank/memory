@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {Card} from './card';
-import {CardService} from "./card.service";
+import {CardService} from './card.service';
+import {PlayerService} from './player/player.service';
 
 @Injectable()
 export class GameService {
@@ -9,21 +10,23 @@ export class GameService {
   turns: number;
   flippedCards: Card[] = [];
   removedCards: Card[] = [];
-  cardService: CardService;
   remainingTurns: number = 0;
+  repeatOnPair: boolean = true;
 
   resolver: any;
 
-  constructor() { }
+  constructor(private cardService: CardService, private playerService: PlayerService) {
+  }
 
   reset() {
     this.flippedCards = [];
     this.removedCards = [];
   }
 
-  start(turns: number, cardService: CardService): Promise<boolean> {
-    this.cardService = cardService;
+  start(turns: number): Promise<boolean> {
     this.turns = turns;
+    this.playerService.nextPlayer();
+
     this.startRound();
 
     return new Promise(function (resolve) {
@@ -37,14 +40,19 @@ export class GameService {
   }
 
   endRound() {
-    if(this.checkForPairs()) {
-      alert('Du hast ein Pärchen!');
+    if (this.checkForPairs()) {
+      this.playerService.addPointsForCurrentPlayer();
       this.removeCurrentCardsFromField();
+
+      if(!this.repeatOnPair) {
+        this.playerService.nextPlayer();
+      }
     } else {
       this.hideFlippedCards();
+      this.playerService.nextPlayer();
     }
 
-    if(this.cardService.countPairs() == this.removedCards.length / this.turns) {
+    if (this.cardService.countPairs() === this.removedCards.length / this.turns) {
       this.endGame();
       return;
     }
@@ -57,7 +65,7 @@ export class GameService {
   }
 
   removeCurrentCardsFromField() {
-    for(let i = this.flippedCards.length; i--;) {
+    for (let i = this.flippedCards.length; i--;) {
       let currentCard: Card = this.flippedCards[i];
 
       currentCard.removed = true;
@@ -68,13 +76,13 @@ export class GameService {
   checkForPairs(): boolean {
     let lastKey = null;
 
-    for(let i = this.flippedCards.length; i--;) {
-      if(lastKey == null) {
+    for (let i = this.flippedCards.length; i--;) {
+      if (lastKey === null) {
         lastKey = this.flippedCards[i].key;
         continue;
       }
 
-      if(lastKey !== this.flippedCards[i].key) {
+      if (lastKey !== this.flippedCards[i].key) {
         return false;
       }
     }
@@ -83,7 +91,7 @@ export class GameService {
   }
 
   addFlippedCard(card: Card) {
-    if(card.removed || card.flipped || this.remainingTurns == 0) {
+    if (card.removed || card.flipped || this.remainingTurns === 0) {
       return;
     }
 
@@ -92,13 +100,13 @@ export class GameService {
 
     this.remainingTurns--;
 
-    if(this.remainingTurns == 0) {
-      window.setTimeout(this.endRound.bind(this), 2000);
+    if (this.remainingTurns === 0) {
+      window.setTimeout(this.endRound.bind(this), 1000);
     }
   }
 
   hideFlippedCards() {
-    for(let i = this.flippedCards.length; i--;) {
+    for (let i = this.flippedCards.length; i--;) {
       this.flippedCards[i].flipped = false;
     }
   }

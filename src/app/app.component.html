@@ -3,6 +3,13 @@
         {{error}}
     </div>
 
+    <div>
+        <div *ngFor="let player of players">
+            <input [(ngModel)]="player.name" />
+        </div>
+        <button (click)="addPlayer()">Neuer Spieler</button>
+    </div>
+
     <label for="rows">Zeilen</label>
     <input type="number" min="2" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
     <label for="columns">Spalten</label>
@@ -12,7 +19,15 @@
     <button (click)="startGame()">Start!</button>
 </div>
 
-<app-field *ngIf="gameRunning" rows="{{rows}}" columns="{{columns}}">Loading Game</app-field>
+<div *ngIf="gameRunning">
+    <ul class="player-list">
+        <li class="player" [class.is-active]="player.isActive" *ngFor="let player of players">
+            {{player.name}} - {{player.points}}
+        </li>
+    </ul>
+
+    <app-field rows="{{rows}}" columns="{{columns}}">Loading Game</app-field>
+</div>
 
 <div *ngIf="gameEnded">
     Spiel vorbei!

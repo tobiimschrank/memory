@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { FieldComponent } from './field/field.component';
 
 import {CardService} from './card.service';
-import {GameService} from "./game.service";
+import {GameService} from './game.service';
+import {PlayerModule} from "./player/player.module";
 
 @NgModule({
   declarations: [
@@ -17,11 +18,12 @@ import {GameService} from "./game.service";
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    PlayerModule
   ],
   providers: [
     CardService,
-    GameService
+    GameService,
   ],
   bootstrap: [AppComponent]
 })

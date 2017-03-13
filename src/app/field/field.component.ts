@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 
 import {CardService} from '../card.service';
 import {Card} from '../card';
-import {GameService} from "../game.service";
+import {GameService} from '../game.service';
 
 @Component({
   selector: 'app-field',

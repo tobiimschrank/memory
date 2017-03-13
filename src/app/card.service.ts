@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Card} from "./card";
+import {Card} from './card';
 
 @Injectable()
 export class CardService {
@@ -23,8 +23,7 @@ export class CardService {
 
     for (let i: number = this.differentCards; i--;) {
       for (let p: number = forPair; p--;) {
-        let newCard = new Card(i);
-        this.cards.push(newCard);
+        this.cards.push(new Card(i));
       }
     }
 
@@ -32,7 +31,7 @@ export class CardService {
   }
 
   cleanup() {
-    for(let i: number = this.cards.length; i--;) {
+    for (let i: number = this.cards.length; i--;) {
       this.cards[i].reset();
     }
 
@@ -52,8 +51,8 @@ export class CardService {
    * @returns {Card}
    */
   getRandomCard(): Card {
-    let random: number = Math.floor(Math.random() * this.cards.length);
-    let card: Card = this.cards[random];
+    const random: number = Math.floor(Math.random() * this.cards.length);
+    const card: Card = this.cards[random];
 
     if (card.placed) {
       return this.getRandomCard();
