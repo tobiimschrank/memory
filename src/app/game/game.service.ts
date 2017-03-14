@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 
-import {Card} from './card';
-import {CardService} from './card.service';
-import {PlayerService} from './player/player.service';
+import {PlayerService} from "../player/player.service";
+import {CardService} from "../card.service";
+import {Card} from "../card";
 
 @Injectable()
 export class GameService {
@@ -44,6 +44,7 @@ export class GameService {
       this.playerService.addPointsForCurrentPlayer();
       this.removeCurrentCardsFromField();
 
+      this.playerService.addCardsToCurrentPlayer(this.flippedCards);
       if(!this.repeatOnPair) {
         this.playerService.nextPlayer();
       }

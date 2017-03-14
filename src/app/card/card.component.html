@@ -1,0 +1,10 @@
+<div class="card" [class.opened]="card.flipped" [class.removed]="card.removed" [class.player]="card.showAgain">
+  <div class="flipper">
+    <div class="back"></div>
+    <div class="front">
+      <div class="card-content" *ngIf="card.flipped">
+        {{card.content}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,31 +1,29 @@
 import {Injectable} from '@angular/core';
 import {Player} from './player';
+import {Card} from '../card';
 
 @Injectable()
 export class PlayerService {
-  players: Player[] = [];
-  currentPlayerIndex: number = -1;
-  currentPlayer: Player;
+  private players: Player[] = [];
+  private currentPlayerIndex: number = -1;
+  private currentPlayer: Player;
 
-  constructor() {
-  }
-
-  createPlayer(name: string = ''): Player {
+  public createPlayer(name: string = ''): Player {
     let newPlayer: Player = new Player(name);
     this.players.push(newPlayer);
 
     return newPlayer;
   }
 
-  getPlayers(): Player[] {
+  public getPlayers(): Player[] {
     return this.players;
   }
 
-  addPointsForCurrentPlayer(pointsToAdd: number = 1): void {
+  public addPointsForCurrentPlayer(pointsToAdd: number = 1): void {
     this.currentPlayer.points += pointsToAdd;
   }
 
-  nextPlayer(): Player {
+  public nextPlayer(): Player {
     if (this.currentPlayer) {
       this.currentPlayer.isActive = false;
     }
@@ -41,7 +39,7 @@ export class PlayerService {
     return this.currentPlayer;
   }
 
-  resetPlayers(hard: boolean = false): void {
+  public resetPlayers(hard: boolean = false): void {
     if (hard) {
       this.players = [];
     } else {
@@ -53,7 +51,7 @@ export class PlayerService {
     this.currentPlayer = null;
   }
 
-  getWinner(): Player[] {
+  public getWinner(): Player[] {
     let winners: Player[] = [],
       sortedPlayers: Player[] = this.players.sort(this.compare),
       highestPoints = 0;
@@ -72,6 +70,12 @@ export class PlayerService {
     }
 
     return winners;
+  }
+
+  public addCardsToCurrentPlayer(cards: Card[]) {
+    for(let card of cards) {
+      this.currentPlayer.addCard(card);
+    }
   }
 
   private compare(a: Player, b: Player): number {

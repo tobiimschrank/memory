@@ -11,10 +11,10 @@
     </div>
 
     <label for="rows">Zeilen</label>
-    <input type="number" min="2" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
+    <input type="number" min="2" max="15" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
     <label for="columns">Spalten</label>
-    <input type="number" min="2" [(ngModel)]="columns" id="columns" />
-    <input type="number" min="2" [(ngModel)]="forPair" />
+    <input type="number" min="2" max="15" [(ngModel)]="columns" id="columns" />
+    <input type="number" min="2" max="10" [(ngModel)]="forPair" />
 
     <button (click)="startGame()">Start!</button>
 </div>
@@ -23,10 +23,11 @@
     <ul class="player-list">
         <li class="player" [class.is-active]="player.isActive" *ngFor="let player of players">
             {{player.name}} - {{player.points}}
+            <div *ngIf="player.cards.length" (mouseover)="showCards(player)" (mouseout)="hideCards(player)">Karten einblenden</div>
         </li>
     </ul>
 
-    <app-field rows="{{rows}}" columns="{{columns}}">Loading Game</app-field>
+    <app-field [rows]="rows" [columns]="columns">Loading Game</app-field>
 </div>
 
 <div *ngIf="gameEnded">

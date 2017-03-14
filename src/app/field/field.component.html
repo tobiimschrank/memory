@@ -1,14 +1,7 @@
 <div class="field-wrap">
   <div class="row" *ngFor="let row of field">
-    <div class="card" *ngFor="let card of row" (click)="flipCard(card)" [class.opened]="card.flipped">
-      <div class="flipper">
-        <div class="back"></div>
-        <div class="front">
-          <div class="card-content" *ngIf="card.flipped">
-            {{card.content}}
-          </div>
-        </div>
-      </div>
+    <div *ngFor="let card of row">
+      <app-card [card]="card" (click)="flipCard(card)">Card</app-card>
     </div>
   </div>
 </div>

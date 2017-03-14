@@ -5,6 +5,7 @@ export class Card {
   flipped: boolean = false;
   placed: boolean = false;
   removed: boolean = false;
+  showAgain: boolean = false;
   key: number;
   content: string;
 

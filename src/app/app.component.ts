@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 
 import {CardService} from './card.service';
 import {Card} from './card';
-import {GameService} from './game.service';
 import {PlayerService} from './player/player.service';
 import {Player} from './player/player';
+import {GameService} from './game/game.service';
 
 @Component({
   selector: 'app-root',
@@ -76,5 +76,15 @@ export class AppComponent implements OnInit {
   addPlayer(): void {
     this.playerService.createPlayer('Player ' + (this.players.length + 1));
     this.players = this.playerService.getPlayers();
+  }
+
+  showCards(player: Player){
+    console.log('show');
+    player.showCards();
+  }
+
+  hideCards(player: Player){
+    console.log('hide');
+    player.hideCards();
   }
 }

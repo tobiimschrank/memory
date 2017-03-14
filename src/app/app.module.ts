@@ -1,30 +1,33 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
-import { AppComponent } from './app.component';
-import { FieldComponent } from './field/field.component';
+import {AppComponent} from './app.component';
+import {FieldComponent} from './field/field.component';
 
 import {CardService} from './card.service';
-import {GameService} from './game.service';
-import {PlayerModule} from "./player/player.module";
+import {PlayerModule} from './player/player.module';
+import {GameModule} from './game/game.module';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FieldComponent
+    FieldComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    PlayerModule
+    PlayerModule,
+    GameModule
   ],
   providers: [
     CardService,
-    GameService,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
