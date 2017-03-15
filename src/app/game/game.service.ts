@@ -66,24 +66,22 @@ export class GameService {
   }
 
   removeCurrentCardsFromField() {
-    for (let i = this.flippedCards.length; i--;) {
-      let currentCard: Card = this.flippedCards[i];
-
-      currentCard.removed = true;
-      this.removedCards.push(currentCard);
+    for (let flippedCard of this.flippedCards) {
+      flippedCard.removed = true;
+      this.removedCards.push(flippedCard);
     }
   }
 
   checkForPairs(): boolean {
     let lastKey = null;
 
-    for (let i = this.flippedCards.length; i--;) {
+    for (let flippedCard of this.flippedCards) {
       if (lastKey === null) {
-        lastKey = this.flippedCards[i].key;
+        lastKey = flippedCard.key;
         continue;
       }
 
-      if (lastKey !== this.flippedCards[i].key) {
+      if (lastKey !== flippedCard.key) {
         return false;
       }
     }
@@ -107,8 +105,8 @@ export class GameService {
   }
 
   hideFlippedCards() {
-    for (let i = this.flippedCards.length; i--;) {
-      this.flippedCards[i].flipped = false;
+    for (let flippedCard of this.flippedCards) {
+      flippedCard.flipped = false;
     }
   }
 }

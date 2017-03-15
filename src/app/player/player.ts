@@ -16,14 +16,14 @@ export class Player {
   }
 
   showCards(): void {
-    for(let c:number = this.cards.length;c--;) {
-      this.cards[c].showAgain = true;
+    for(let card of this.cards) {
+      card.showAgain = true;
     }
   }
 
   hideCards(): void {
-    for(let c:number = this.cards.length;c--;) {
-      this.cards[c].showAgain = false;
+    for(let card of this.cards) {
+      card.showAgain = false;
     }
   }
 }

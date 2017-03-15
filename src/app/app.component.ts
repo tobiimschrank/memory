@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   columns: number = 4;
   cards: Card[];
   players: Player[] = [];
+  winner: Player[] = [];
 
   error: string = null;
 
@@ -29,9 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (let i = this.playersAtStart; i--;) {
-      this.addPlayer();
-    }
+    this.buildPlayers();
   }
 
   getCards(): void {
@@ -49,7 +48,19 @@ export class AppComponent implements OnInit {
     this.getCards();
     this.gameRunning = true;
 
-    this.gameService.start(this.forPair).then((gameEnded) => this.gameEnded = gameEnded);
+    this.gameService.start(this.forPair).then(() => this.onGameEnd());
+  }
+
+  onGameEnd(): void {
+    this.gameEnded = true;
+    this.winner = this.playerService.getWinner();
+  }
+
+  private buildPlayers(): void {
+    for (let i = this.playersAtStart; i--;) {
+      console.log('add');
+      this.addPlayer();
+    }
   }
 
   reset() {
@@ -59,14 +70,18 @@ export class AppComponent implements OnInit {
 
     this.gameEnded = false;
     this.gameRunning = false;
+    this.winner = [];
+    this.players = [];
 
     this.playerService.resetPlayers(true);
     this.gameService.reset();
+    this.buildPlayers();
   }
 
   restart() {
     this.gameEnded = false;
     this.gameRunning = false;
+    this.winner = [];
 
     this.playerService.resetPlayers();
     this.gameService.reset();
@@ -78,12 +93,12 @@ export class AppComponent implements OnInit {
     this.players = this.playerService.getPlayers();
   }
 
-  showCards(player: Player){
+  showCards(player: Player) {
     console.log('show');
     player.showCards();
   }
 
-  hideCards(player: Player){
+  hideCards(player: Player) {
     console.log('hide');
     player.hideCards();
   }

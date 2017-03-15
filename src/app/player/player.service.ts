@@ -24,18 +24,21 @@ export class PlayerService {
   }
 
   public nextPlayer(): Player {
+    console.log('currentPlayer 1');
     if (this.currentPlayer) {
       this.currentPlayer.isActive = false;
     }
+    console.log('currentPlayer 2');
 
     this.currentPlayerIndex++;
     if (this.currentPlayerIndex >= this.players.length) {
       this.currentPlayerIndex = 0;
     }
-
+console.log(this.players.length);
     this.currentPlayer = this.players[this.currentPlayerIndex];
     this.currentPlayer.isActive = true;
 
+    console.log('currentPlayer 3');
     return this.currentPlayer;
   }
 
@@ -43,11 +46,14 @@ export class PlayerService {
     if (hard) {
       this.players = [];
     } else {
-      for (let p: number = this.players.length; p--;) {
-        this.players[p].points = 0;
+      for (let player of this.players) {
+        player.points = 0;
+        player.cards = [];
       }
     }
+
     this.currentPlayerIndex = -1;
+    console.log('currentPlayer');
     this.currentPlayer = null;
   }
 

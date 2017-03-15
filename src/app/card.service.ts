@@ -31,8 +31,8 @@ export class CardService {
   }
 
   cleanup() {
-    for (let i: number = this.cards.length; i--;) {
-      this.cards[i].reset();
+    for (let card of this.cards) {
+      card.reset();
     }
 
     this.cards = [];
