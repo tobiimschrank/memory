@@ -1,4 +1,4 @@
-import {Card} from '../card';
+import {Card} from '../card/card';
 
 export class Player {
   name: string = '';
@@ -7,23 +7,19 @@ export class Player {
 
   cards: Card[] = [];
 
+  /**
+   *
+   * @param {string} name
+   */
   constructor(name: string = 'Player') {
     this.name = name;
   }
 
+  /**
+   *
+   * @param card
+   */
   addCard(card: Card): void {
     this.cards.push(card);
-  }
-
-  showCards(): void {
-    for(let card of this.cards) {
-      card.showAgain = true;
-    }
-  }
-
-  hideCards(): void {
-    for(let card of this.cards) {
-      card.showAgain = false;
-    }
   }
 }

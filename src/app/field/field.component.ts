@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
-
-import {CardService} from '../card.service';
-import {GameService} from "../game/game.service";
+import {CardService} from '../card/card.service';
+import {GameService} from '../game/game.service';
+import {Card} from '../card/card';
 
 @Component({
   selector: 'app-field',
@@ -17,14 +17,30 @@ export class FieldComponent implements OnInit {
 
   field = [];
 
+  /**
+   *
+   * @param {CardService} cardService
+   * @param {GameService} gameService
+   */
   constructor(private cardService: CardService, private gameService: GameService) {
   }
 
-  buildTileList() {
-    for (let c = this.columns; c--;) {
+  /**
+   *
+   */
+  ngOnInit() {
+    this._buildTileList();
+  }
+
+  /**
+   *
+   * @private
+   */
+  _buildTileList(): void {
+    for (let c = this.rows; c--;) {
       let row = [];
 
-      for (let r = this.rows; r--;) {
+      for (let r = this.columns; r--;) {
         row.push(this.cardService.getRandomCard());
       }
 
@@ -32,11 +48,11 @@ export class FieldComponent implements OnInit {
     }
   }
 
-  flipCard(card) {
+  /**
+   *
+   * @param {Card} card
+   */
+  flipCard(card: Card): void {
     this.gameService.addFlippedCard(card);
-  }
-
-  ngOnInit() {
-    this.buildTileList();
   }
 }

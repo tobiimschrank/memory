@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-
-import {CardService} from './card.service';
-import {Card} from './card';
+import {CardService} from './card/card.service';
+import {Card} from './card/card';
 import {PlayerService} from './player/player.service';
 import {Player} from './player/player';
 import {GameService} from './game/game.service';
@@ -12,32 +11,40 @@ import {GameService} from './game/game.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  playersAtStart = 2;
+  _playersAtStart = 2;
 
   forPair: number = 2;
   rows: number = 4;
   columns: number = 4;
   cards: Card[];
   players: Player[] = [];
-  winner: Player[] = [];
+  winnerNames: string[] = [];
 
   error: string = null;
 
   gameRunning: boolean = false;
   gameEnded: boolean = false;
 
-  constructor(private cardService: CardService, private playerService: PlayerService, private gameService: GameService) {
+  /**
+   *
+   * @param {CardService} _cardService
+   * @param {PlayerService} _playerService
+   * @param {GameService} _gameService
+   */
+  constructor(private _cardService: CardService, private _playerService: PlayerService, private _gameService: GameService) {
   }
 
+  /**
+   *
+   */
   ngOnInit(): void {
-    this.buildPlayers();
+    this._buildPlayers();
   }
 
-  getCards(): void {
-    this.cardService.buildCards(this.forPair, this.rows * this.columns).then((cards) => this.cards = cards);
-  }
-
-  startGame() {
+  /**
+   *
+   */
+  startGame(): void {
     if ((this.rows * this.columns) % this.forPair > 0) {
       this.error = 'Bitte wähle eine andere Anzahl von Zeilen und Spalten aus, da ansonsten Karten übrig bleiben würden.';
       return;
@@ -45,61 +52,72 @@ export class AppComponent implements OnInit {
 
     this.error = null;
 
-    this.getCards();
+    this._getCards();
     this.gameRunning = true;
 
-    this.gameService.start(this.forPair).then(() => this.onGameEnd());
+    this._gameService.start(this.forPair).then(() => this._onGameEnd());
   }
 
-  onGameEnd(): void {
-    this.gameEnded = true;
-    this.winner = this.playerService.getWinner();
+  /**
+   *
+   * @param {boolean} hard
+   */
+  reset(hard: boolean = false): void {
+    if (hard) {
+      this.forPair = 2;
+      this.rows = 4;
+      this.columns = 4;
+      this.players = [];
+    }
+
+    this.gameEnded = false;
+    this.gameRunning = false;
+
+    this._playerService.resetPlayers(hard);
+    this._gameService.reset();
+    this._buildPlayers();
   }
 
-  private buildPlayers(): void {
-    for (let i = this.playersAtStart; i--;) {
-      console.log('add');
+  /**
+   *
+   */
+  addPlayer(): void {
+    this._playerService.createPlayer('Player ' + (this.players.length + 1));
+    this.players = this._playerService.getPlayers();
+  }
+
+  /**
+   *
+   */
+  removePlayer(): void {
+    this._playerService.removePlayer();
+    this.players = this._playerService.getPlayers();
+  }
+
+  /**
+   *
+   * @private
+   */
+  _buildPlayers(): void {
+    for (let i = this._playersAtStart; i--;) {
       this.addPlayer();
     }
   }
 
-  reset() {
-    this.forPair = 2;
-    this.rows = 4;
-    this.columns = 4;
-
-    this.gameEnded = false;
-    this.gameRunning = false;
-    this.winner = [];
-    this.players = [];
-
-    this.playerService.resetPlayers(true);
-    this.gameService.reset();
-    this.buildPlayers();
+  /**
+   *
+   * @private
+   */
+  _getCards(): void {
+    this._cardService.buildCards(this.forPair, this.rows * this.columns).then((cards) => this.cards = cards);
   }
 
-  restart() {
-    this.gameEnded = false;
-    this.gameRunning = false;
-    this.winner = [];
-
-    this.playerService.resetPlayers();
-    this.gameService.reset();
-    this.startGame();
-  }
-
-  addPlayer(): void {
-    this.playerService.createPlayer('Player ' + (this.players.length + 1));
-    this.players = this.playerService.getPlayers();
-  }
-
-  showCards(player: Player) {
-    console.log('show');
-    player.showCards();
-  }
-
-  hideCards(player: Player) {
-    console.log('hide');
-    player.hideCards();
+  /**
+   *
+   * @private
+   */
+  _onGameEnd(): void {
+    this.gameEnded = true;
+    this.winnerNames = this._playerService.getWinner();
   }
 }

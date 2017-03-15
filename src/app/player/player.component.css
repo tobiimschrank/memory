@@ -1,0 +1,7 @@
+.player {
+
+}
+
+.player.is-active {
+    text-decoration: underline;
+}

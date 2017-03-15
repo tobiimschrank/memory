@@ -1,0 +1,8 @@
+<div class="player" [class.is-active]="player.isActive" >
+  {{player.name}} - {{player.points}}
+  <div *ngIf="player.cards.length">
+    <div *ngFor="let playerCard of player.cards">
+      <app-card [card]="playerCard" [alwaysVisible]="true"></app-card>
+    </div>
+  </div>
+</div>

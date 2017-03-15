@@ -4,9 +4,12 @@ import {Card} from './card';
 @Injectable()
 export class CardService {
 
-  differentCards: number;
-  cards: Card[] = [];
+  _differentCards: number;
+  _cards: Card[] = [];
 
+  /**
+   *
+   */
   constructor() {
   }
 
@@ -17,25 +20,29 @@ export class CardService {
    * @returns {Promise<Card[]>}
    */
   buildCards(forPair: number, count: number): Promise<Card[]> {
-    this.differentCards = count / forPair;
+    this._differentCards = count / forPair;
 
-    this.cleanup();
+    this._cleanup();
 
-    for (let i: number = this.differentCards; i--;) {
+    for (let i: number = this._differentCards; i--;) {
       for (let p: number = forPair; p--;) {
-        this.cards.push(new Card(i));
+        this._cards.push(new Card(i));
       }
     }
 
-    return Promise.resolve(this.cards);
+    return Promise.resolve(this._cards);
   }
 
-  cleanup() {
-    for (let card of this.cards) {
+  /**
+   *
+   * @private
+   */
+  _cleanup(): void {
+    for (let card of this._cards) {
       card.reset();
     }
 
-    this.cards = [];
+    this._cards = [];
   }
 
   /**
@@ -43,7 +50,7 @@ export class CardService {
    * @returns {number}
    */
   countPairs(): number {
-    return this.differentCards;
+    return this._differentCards;
   }
 
   /**
@@ -51,8 +58,8 @@ export class CardService {
    * @returns {Card}
    */
   getRandomCard(): Card {
-    const random: number = Math.floor(Math.random() * this.cards.length);
-    const card: Card = this.cards[random];
+    const random: number = Math.floor(Math.random() * this._cards.length);
+    const card: Card = this._cards[random];
 
     if (card.placed) {
       return this.getRandomCard();

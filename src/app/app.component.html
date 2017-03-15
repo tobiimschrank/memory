@@ -1,42 +1,74 @@
 <div class="settings" *ngIf="!gameRunning">
-    <div class="error-message" *ngIf="error">
-        {{error}}
-    </div>
-
-    <div>
+    <fieldset>
+        <legend>Spieler</legend>
         <div *ngFor="let player of players">
             <input [(ngModel)]="player.name" />
         </div>
-        <button (click)="addPlayer()">Neuer Spieler</button>
-    </div>
+        <button (click)="addPlayer()" *ngIf="players.length < 10">Neuer Spieler</button>
+        <button (click)="removePlayer()" *ngIf="players.length > 2">Spieler entfernen</button>
+    </fieldset>
 
-    <label for="rows">Zeilen</label>
-    <input type="number" min="2" max="15" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
-    <label for="columns">Spalten</label>
-    <input type="number" min="2" max="15" [(ngModel)]="columns" id="columns" />
-    <input type="number" min="2" max="10" [(ngModel)]="forPair" />
+    <fieldset>
+        <legend>Spiel</legend>
+
+        <div class="error-message" *ngIf="error">
+            {{error}}
+        </div>
+
+        <div class="field-wrap">
+            <label for="rows">Zeilen</label>
+            <input type="number" min="2" max="15" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
+        </div>
+        <div class="field-wrap">
+            <label for="columns">Spalten</label>
+            <input type="number" min="2" max="15" [(ngModel)]="columns" id="columns" />
+        </div>
+        <div class="field-wrap">
+            <label for="for-pair">Karten pro Paar</label>
+            <input type="number" min="2" max="10" [(ngModel)]="forPair" id="for-pair"/>
+        </div>
+    </fieldset>
 
     <button (click)="startGame()">Start!</button>
 </div>
 
 <div *ngIf="gameRunning">
     <ul class="player-list">
-        <li class="player" [class.is-active]="player.isActive" *ngFor="let player of players">
-            {{player.name}} - {{player.points}}
-            <div *ngIf="player.cards.length" (mouseover)="showCards(player)" (mouseout)="hideCards(player)">Karten einblenden</div>
+        <li *ngFor="let player of players">
+            <app-player [player]="player"></app-player>
         </li>
     </ul>
 
-    <app-field [rows]="rows" [columns]="columns">Loading Game</app-field>
+    <app-field [rows]="rows" [columns]="columns">Loading Game...</app-field>
 </div>
 
 <div *ngIf="gameEnded">
+    <div [ngPlural]="winnerNames.length">
+        <template ngPluralCase="=1">
+            <div class="winner-text">
+                <strong class="winner">{{winnerNames[0]}}</strong> hat die Runde gewonnen!
+            </div>
+        </template>
+        <template ngPluralCase="few">
+            <div class="winner-text">
+                <span *ngFor="let winnerName of winnerNames; let i = index;">
+                    <span *ngIf="i.last">
+                        <strong>{{winnerName}}</strong>
+                    </span>
+                    <span *ngIf="!i.last">
+                        <strong>{{winnerName}}</strong>,
+                    </span>
+                </span>
+                haben die Runde mit der selben Anzahl an Punkten beendet!
+            </div>
+        </template>
+    </div>
 
     Spiel vorbei!
-    <div (click)="reset()">
+    <div (click)="reset(true)">
         Neues Spiel starten?
     </div>
-    <div (click)="restart()">
-        Neues Spiel mit selben Einstellungen starten?
+    <div (click)="reset()">
+        Neues Spiel mit den selben Einstellungen starten?
     </div>
 </div>

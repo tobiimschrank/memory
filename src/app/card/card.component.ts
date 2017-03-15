@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Card} from "../card";
+import {Card} from './card';
 
 @Component({
   selector: 'app-card',
@@ -9,10 +9,18 @@ import {Card} from "../card";
 export class CardComponent implements OnInit {
   @Input()
   card: Card;
+  @Input()
+  alwaysVisible: boolean = false;
 
-  constructor() { }
-
-  ngOnInit() {
+  /**
+   *
+   */
+  constructor() {
   }
 
+  /**
+   *
+   */
+  ngOnInit() {
+  }
 }

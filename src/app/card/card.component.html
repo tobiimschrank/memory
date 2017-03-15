@@ -1,4 +1,4 @@
-<div class="card" [class.opened]="card.flipped" [class.removed]="card.removed" [class.player]="card.showAgain">
+<div class="card" [class.opened]="card.flipped" [class.removed]="card.removed && !alwaysVisible" [class.player]="card.showAgain">
   <div class="flipper">
     <div class="back"></div>
     <div class="front">

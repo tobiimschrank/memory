@@ -1,90 +1,130 @@
 import {Injectable} from '@angular/core';
 import {Player} from './player';
-import {Card} from '../card';
+import {Card} from '../card/card';
 
 @Injectable()
 export class PlayerService {
-  private players: Player[] = [];
-  private currentPlayerIndex: number = -1;
-  private currentPlayer: Player;
+  _players: Player[] = [];
+  _currentPlayerIndex: number = -1;
+  _currentPlayer: Player;
 
-  public createPlayer(name: string = ''): Player {
+  /**
+   *
+   * @param {string} name
+   * @returns {Player}
+   */
+  createPlayer(name: string = ''): Player {
     let newPlayer: Player = new Player(name);
-    this.players.push(newPlayer);
+    this._players.push(newPlayer);
 
     return newPlayer;
   }
 
-  public getPlayers(): Player[] {
-    return this.players;
+  /**
+   *
+   */
+  removePlayer(): void {
+    this._players.pop();
   }
 
-  public addPointsForCurrentPlayer(pointsToAdd: number = 1): void {
-    this.currentPlayer.points += pointsToAdd;
+  /**
+   *
+   * @returns {Player[]}
+   */
+  getPlayers(): Player[] {
+    return this._players;
   }
 
-  public nextPlayer(): Player {
-    console.log('currentPlayer 1');
-    if (this.currentPlayer) {
-      this.currentPlayer.isActive = false;
+  /**
+   *
+   * @param {number} pointsToAdd
+   */
+  addPointsForCurrentPlayer(pointsToAdd: number = 1): void {
+    this._currentPlayer.points += pointsToAdd;
+  }
+
+  /**
+   *
+   * @returns {Player}
+   */
+  nextPlayer(): Player {
+    if (this._currentPlayer) {
+      this._currentPlayer.isActive = false;
     }
-    console.log('currentPlayer 2');
 
-    this.currentPlayerIndex++;
-    if (this.currentPlayerIndex >= this.players.length) {
-      this.currentPlayerIndex = 0;
+    this._currentPlayerIndex++;
+    if (this._currentPlayerIndex >= this._players.length) {
+      this._currentPlayerIndex = 0;
     }
-console.log(this.players.length);
-    this.currentPlayer = this.players[this.currentPlayerIndex];
-    this.currentPlayer.isActive = true;
 
-    console.log('currentPlayer 3');
-    return this.currentPlayer;
+    this._currentPlayer = this._players[this._currentPlayerIndex];
+    this._currentPlayer.isActive = true;
+
+    return this._currentPlayer;
   }
 
-  public resetPlayers(hard: boolean = false): void {
+  /**
+   *
+   * @param {boolean} hard
+   */
+  resetPlayers(hard: boolean = false): void {
     if (hard) {
-      this.players = [];
+      this._players = [];
     } else {
-      for (let player of this.players) {
+      for (let player of this._players) {
         player.points = 0;
         player.cards = [];
       }
     }
 
-    this.currentPlayerIndex = -1;
-    console.log('currentPlayer');
-    this.currentPlayer = null;
+    this._currentPlayerIndex = -1;
+    this._currentPlayer = null;
   }
 
-  public getWinner(): Player[] {
-    let winners: Player[] = [],
-      sortedPlayers: Player[] = this.players.sort(this.compare),
-      highestPoints = 0;
+  /**
+   *
+   * @returns {string[]}
+   */
+  getWinner(): string[] {
+    let winners: string[] = [],
+      playerClone: Player[] = this._players,
+      sortedPlayers: Player[] = playerClone.sort(this._compare),
+      highestPoints: number = 0;
 
-    for (let s = 0; s < sortedPlayers.length; s++) {
+    for (let s: number = 0; s < sortedPlayers.length; s++) {
       let currentPlayer: Player = sortedPlayers[s];
-      if(currentPlayer.points > highestPoints) {
+      if (currentPlayer.points > highestPoints) {
         highestPoints = currentPlayer.points;
       }
 
-      if(currentPlayer.points < highestPoints) {
+      if (currentPlayer.points < highestPoints) {
         break;
       }
 
-      winners.push(currentPlayer);
+      winners.push(currentPlayer.name);
     }
 
     return winners;
   }
 
-  public addCardsToCurrentPlayer(cards: Card[]) {
-    for(let card of cards) {
-      this.currentPlayer.addCard(card);
+  /**
+   *
+   * @param {Card[]} cards
+   */
+  addCardsToCurrentPlayer(cards: Card[]): void {
+    for (let card of cards) {
+      this._currentPlayer.addCard(card);
     }
   }
 
-  private compare(a: Player, b: Player): number {
+  /**
+   *
+   * @param {Player} a
+   * @param {Player} b
+   * @returns {number}
+   * @private
+   */
+  _compare(a: Player, b: Player): number {
     if (a.points < b.points) {
       return 1;
     }

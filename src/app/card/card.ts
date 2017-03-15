@@ -9,12 +9,19 @@ export class Card {
   key: number;
   content: string;
 
+  /**
+   *
+   * @param {number} key
+   */
   constructor(key: number) {
     this.key = key;
     this.content = key.toString();
   }
 
-  reset() {
+  /**
+   *
+   */
+  reset(): void {
     this.flipped = false;
     this.placed = false;
     this.removed = false;
