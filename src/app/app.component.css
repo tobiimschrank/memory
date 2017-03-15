@@ -1,0 +1,67 @@
+fieldset {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+legend {
+    text-transform: uppercase;
+    padding: .5rem;
+}
+
+label {
+    text-align: left;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: .25rem;
+}
+
+.content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    color: #333;
+}
+
+.field-wrap {
+    margin-bottom: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: .5rem 1rem;
+    border: 1px solid #ddd;
+    margin-bottom: .5rem;
+
+    background: #ddd;
+    box-sizing: border-box;
+}
+
+.button-wrap {
+    text-align: center;
+}
+
+.btn {
+    color: #fff;
+    background-color: #666;
+    border: 1px solid #666;
+    padding: .5rem 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    transition: all 250ms;
+}
+
+.btn:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+@media screen and (min-width: 768px) {
+    .three-column {
+        display: flex;
+        justify-content: space-between;
+    }
+}
