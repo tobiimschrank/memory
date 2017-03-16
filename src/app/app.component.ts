@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {CardService} from './card/card.service';
-import {Card} from './card/card';
 import {PlayerService} from './player/player.service';
 import {Player} from './player/player';
 import {GameService} from './game/game.service';
@@ -16,7 +14,7 @@ export class AppComponent implements OnInit {
   forPair: number = 2;
   rows: number = 4;
   columns: number = 4;
-  cards: Card[];
+  type: string = 'default';
   players: Player[] = [];
   winnerNames: string[] = [];
 
@@ -27,11 +25,10 @@ export class AppComponent implements OnInit {
 
   /**
    *
-   * @param {CardService} _cardService
    * @param {PlayerService} _playerService
    * @param {GameService} _gameService
    */
-  constructor(private _cardService: CardService, private _playerService: PlayerService, private _gameService: GameService) {
+  constructor(private _playerService: PlayerService, private _gameService: GameService) {
   }
 
   /**
@@ -75,7 +72,13 @@ export class AppComponent implements OnInit {
 
     this._playerService.resetPlayers(hard);
     this._gameService.reset();
-    this._buildPlayers();
+
+    if (hard) {
+      this._buildPlayers();
+    } else {
+      this.players = this._playerService.getPlayers();
+      this.startGame();
+    }
   }
 
   /**
@@ -109,7 +112,7 @@ export class AppComponent implements OnInit {
    * @private
    */
   _getCards(): void {
-    this._cardService.buildCards(this.forPair, this.rows * this.columns).then((cards) => this.cards = cards);
+    this._gameService.generateCards(this.forPair, this.rows * this.columns, this.type);
   }
 
   /**

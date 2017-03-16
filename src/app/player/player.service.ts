@@ -74,6 +74,7 @@ export class PlayerService {
       for (let player of this._players) {
         player.points = 0;
         player.cards = [];
+        player.isActive = false;
       }
     }
 
@@ -87,7 +88,7 @@ export class PlayerService {
    */
   getWinner(): string[] {
     let winners: string[] = [],
-      playerClone: Player[] = this._players,
+      playerClone: Player[] = Object.assign(this._players),
       sortedPlayers: Player[] = playerClone.sort(this._compare),
       highestPoints: number = 0;
 

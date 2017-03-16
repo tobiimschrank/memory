@@ -1,7 +1,21 @@
 <div class="player" [class.is-active]="player.isActive" >
-  {{player.name}} - {{player.points}}
-  <div *ngIf="player.cards.length">
-    <div *ngFor="let playerCard of player.cards">
+  <div class="points">
+    {{player.points}}
+  </div>
+  <div class="name">
+    {{player.name}}
+  </div>
+  <div class="card-list" (click)="showCardLayer()">
+    <div class="card-wrap" *ngFor="let playerCard of player.cards">
+      <app-card [card]="playerCard" [alwaysVisible]="true" [rotate]="true"></app-card>
+    </div>
+  </div>
+</div>
+
+<div class="layer" *ngIf="cardLayer">
+  <div class="close" (click)="hideCardLayer()">schließen</div>
+  <div class="layer-card-list">
+    <div class="card-single-wrap" *ngFor="let playerCard of player.cards">
       <app-card [card]="playerCard" [alwaysVisible]="true"></app-card>
     </div>
   </div>

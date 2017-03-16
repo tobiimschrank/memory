@@ -15,10 +15,10 @@ export class GameService {
 
   /**
    *
-   * @param cardService
-   * @param playerService
+   * @param {CardService} _cardService
+   * @param {PlayerService} _playerService
    */
-  constructor(private cardService: CardService, private playerService: PlayerService) {
+  constructor(private _cardService: CardService, private _playerService: PlayerService) {
   }
 
   /**
@@ -36,7 +36,7 @@ export class GameService {
    */
   start(turns: number): Promise<boolean> {
     this._turns = turns;
-    this.playerService.nextPlayer();
+    this._playerService.nextPlayer();
 
     this._startRound();
 
@@ -85,6 +85,16 @@ export class GameService {
 
   /**
    *
+   * @param {number} perPair
+   * @param {number} differentCards
+   * @param {string} type
+   */
+  generateCards(perPair: number, differentCards: number, type: string = 'number'): void {
+    this._cardService.buildCards(perPair, differentCards, type);
+  }
+
+  /**
+   *
    * @private
    */
   _startRound(): void {
@@ -98,19 +108,19 @@ export class GameService {
    */
   _endRound(): void {
     if (this._checkForPairs()) {
-      this.playerService.addPointsForCurrentPlayer();
+      this._playerService.addPointsForCurrentPlayer();
       this.removeCurrentCardsFromField();
 
-      this.playerService.addCardsToCurrentPlayer(this._flippedCards);
+      this._playerService.addCardsToCurrentPlayer(this._flippedCards);
       if (!this._repeatOnPair) {
-        this.playerService.nextPlayer();
+        this._playerService.nextPlayer();
       }
     } else {
       this.hideFlippedCards();
-      this.playerService.nextPlayer();
+      this._playerService.nextPlayer();
     }
 
-    if (this.cardService.countPairs() === this._removedCards.length / this._turns) {
+    if (this._cardService.countPairs() === this._removedCards.length / this._turns) {
       this._resolver(true);
       return;
     }

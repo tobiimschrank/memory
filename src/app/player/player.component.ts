@@ -9,10 +9,19 @@ import {Player} from './player';
 export class PlayerComponent implements OnInit {
   @Input()
   player: Player;
+  cardLayer: boolean = false;
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  showCardLayer(): void {
+    this.cardLayer = true;
+  }
+
+  hideCardLayer(): void {
+    this.cardLayer = false;
   }
 }

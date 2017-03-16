@@ -1,6 +1,6 @@
 <div class="field-wrap">
   <div class="row" *ngFor="let row of field">
-    <div *ngFor="let card of row">
+    <div class="cell" *ngFor="let card of row" [style]="cellWidth">
       <app-card [card]="card" (click)="flipCard(card)">Card</app-card>
     </div>
   </div>

@@ -9,6 +9,8 @@ export class Card {
   key: number;
   content: string;
 
+  type: string = 'default';
+
   /**
    *
    * @param {number} key

@@ -1,7 +1,61 @@
 .player {
+    width: 100px;
+    padding: 1rem;
+    border: 1px solid transparent;
+    margin: .75rem;
 
+    text-align: center;
+
+    box-sizing: border-box;
 }
 
 .player.is-active {
-    text-decoration: underline;
+    border-color: #ccc;
+}
+
+.player .points {
+    display: block;
+    font-size: 35px;
+
+}
+
+.player .name {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.player .card-list {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 1rem auto 0;
+}
+
+.player .card-list .card-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.layer-card-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.layer-card-list .card-single-wrap {
+    width: 70px;
+    height: 70px;
+    margin: 3px;
+}
+
+@media screen and (min-width: 768px) {
+    .layer-card-list .card-single-wrap {
+        width: 100px;
+        height: 100px;
+        margin: 5px;
+    }
 }

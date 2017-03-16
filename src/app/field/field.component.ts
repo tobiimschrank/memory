@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {CardService} from '../card/card.service';
 import {GameService} from '../game/game.service';
 import {Card} from '../card/card';
+import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-field',
@@ -14,21 +15,24 @@ export class FieldComponent implements OnInit {
   rows: number = 4;
   @Input()
   columns: number = 4;
+  cellWidth: SafeStyle;
 
   field = [];
 
   /**
    *
-   * @param {CardService} cardService
-   * @param {GameService} gameService
+   * @param cardService
+   * @param gameService
+   * @param sanitizer
    */
-  constructor(private cardService: CardService, private gameService: GameService) {
+  constructor(private cardService: CardService, private gameService: GameService, private sanitizer: DomSanitizer) {
   }
 
   /**
    *
    */
   ngOnInit() {
+    this.cellWidth = this.sanitizer.bypassSecurityTrustStyle('width:' + (100 / this.columns) + '%;');
     this._buildTileList();
   }
 

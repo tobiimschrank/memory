@@ -20,13 +20,23 @@
                     <label for="for-pair">Karten pro Paar</label>
                     <input type="number" min="2" max="10" [(ngModel)]="forPair" id="for-pair"/>
                 </div>
+                <div class="field-wrap column">
+                    <label for="type">Blatt</label>
+                    <select name="type" [(ngModel)]="type" id="type">
+                        <option value="default">Zahlen</option>
+                        <option value="beer">Bier</option>
+                        <option value="bear">Bären</option>
+                        <option value="cage">Nicolas Cage</option>
+                        <option value="flickr">Flickr</option>
+                    </select>
+                </div>
             </div>
         </fieldset>
 
         <fieldset>
             <legend>Spieler</legend>
             <div *ngFor="let player of players">
-                <input [(ngModel)]="player.name" />
+                <input [(ngModel)]="player.name" maxlength="12" />
             </div>
             <button class="btn" (click)="addPlayer()" *ngIf="players.length < 10">Neuer Spieler</button>
             <button class="btn" (click)="removePlayer()" *ngIf="players.length > 2">Spieler entfernen</button>
@@ -47,20 +57,24 @@
         <app-field [rows]="rows" [columns]="columns">Loading Game...</app-field>
     </div>
 
-    <div *ngIf="gameEnded">
-        <div [ngPlural]="winnerNames.length">
+    <div class="layer" *ngIf="gameEnded">
+        <div class="game-over">
+            Spiel vorbei
+        </div>
+
+        <div class="winners" [ngPlural]="winnerNames.length">
             <template ngPluralCase="=1">
                 <div class="winner-text">
                     <strong class="winner">{{winnerNames[0]}}</strong> hat die Runde gewonnen!
                 </div>
             </template>
-            <template ngPluralCase="few">
+            <template ngPluralCase="other">
                 <div class="winner-text">
-                    <span *ngFor="let winnerName of winnerNames; let i = index;">
-                        <span *ngIf="i.last">
+                    <span *ngFor="let winnerName of winnerNames; let last = last;">
+                        <span *ngIf="last">
                             <strong>{{winnerName}}</strong>
                         </span>
-                        <span *ngIf="!i.last">
+                        <span *ngIf="!last">
                             <strong>{{winnerName}}</strong>,
                         </span>
                     </span>
@@ -69,12 +83,11 @@
             </template>
         </div>
 
-        Spiel vorbei!
-        <div (click)="reset(true)">
-            Neues Spiel starten?
-        </div>
-        <div (click)="reset()">
-            Neues Spiel mit den selben Einstellungen starten?
-        </div>
+        <button class="btn" (click)="reset(true)">
+            Neues Spiel
+        </button>
+        <button class="btn" (click)="reset()">
+            Wiederholen
+        </button>
     </div>
 </div>
