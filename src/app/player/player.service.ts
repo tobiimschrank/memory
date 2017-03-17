@@ -88,21 +88,15 @@ export class PlayerService {
    */
   getWinner(): string[] {
     let winners: string[] = [],
-      playerClone: Player[] = Object.assign(this._players),
-      sortedPlayers: Player[] = playerClone.sort(this._compare),
       highestPoints: number = 0;
 
-    for (let s: number = 0; s < sortedPlayers.length; s++) {
-      let currentPlayer: Player = sortedPlayers[s];
-      if (currentPlayer.points > highestPoints) {
-        highestPoints = currentPlayer.points;
+    for(let currentPlayer of this._players) {
+      if(highestPoints == currentPlayer.points) {
+        winners.push(currentPlayer.name);
       }
-
-      if (currentPlayer.points < highestPoints) {
-        break;
+      if(highestPoints < currentPlayer.points) {
+        winners = [currentPlayer.name];
       }
-
-      winners.push(currentPlayer.name);
     }
 
     return winners;
@@ -116,22 +110,5 @@ export class PlayerService {
     for (let card of cards) {
       this._currentPlayer.addCard(card);
     }
-  }
-
-  /**
-   *
-   * @param {Player} a
-   * @param {Player} b
-   * @returns {number}
-   * @private
-   */
-  _compare(a: Player, b: Player): number {
-    if (a.points < b.points) {
-      return 1;
-    }
-    if (a.points > b.points) {
-      return -1;
-    }
-    return 0;
   }
 }

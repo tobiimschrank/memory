@@ -57,37 +57,39 @@
         <app-field [rows]="rows" [columns]="columns">Loading Game...</app-field>
     </div>
 
-    <div class="layer" *ngIf="gameEnded">
-        <div class="game-over">
-            Spiel vorbei
-        </div>
+    <div class="layer-wrap" *ngIf="gameEnded">
+        <div class="layer">
+            <div class="game-over">
+                Spiel vorbei
+            </div>
 
-        <div class="winners" [ngPlural]="winnerNames.length">
-            <template ngPluralCase="=1">
-                <div class="winner-text">
-                    <strong class="winner">{{winnerNames[0]}}</strong> hat die Runde gewonnen!
-                </div>
-            </template>
-            <template ngPluralCase="other">
-                <div class="winner-text">
-                    <span *ngFor="let winnerName of winnerNames; let last = last;">
-                        <span *ngIf="last">
-                            <strong>{{winnerName}}</strong>
+            <div class="winners" [ngPlural]="winnerNames.length">
+                <template ngPluralCase="=1">
+                    <div class="winner-text">
+                        <strong class="winner">{{winnerNames[0]}}</strong> hat die Runde gewonnen!
+                    </div>
+                </template>
+                <template ngPluralCase="other">
+                    <div class="winner-text">
+                        <span *ngFor="let winnerName of winnerNames; let last = last;">
+                            <span *ngIf="last">
+                                <strong>{{winnerName}}</strong>
+                            </span>
+                            <span *ngIf="!last">
+                                <strong>{{winnerName}}</strong>,
+                            </span>
                         </span>
-                        <span *ngIf="!last">
-                            <strong>{{winnerName}}</strong>,
-                        </span>
-                    </span>
-                    haben die Runde mit der selben Anzahl an Punkten beendet!
-                </div>
-            </template>
-        </div>
+                        haben die Runde mit der selben Anzahl an Punkten beendet!
+                    </div>
+                </template>
+            </div>
 
-        <button class="btn" (click)="reset(true)">
-            Neues Spiel
-        </button>
-        <button class="btn" (click)="reset()">
-            Wiederholen
-        </button>
+            <button class="btn" (click)="reset(true)">
+                Neues Spiel
+            </button>
+            <button class="btn" (click)="reset()">
+                Wiederholen
+            </button>
+        </div>
     </div>
 </div>

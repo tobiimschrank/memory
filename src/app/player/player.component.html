@@ -12,11 +12,13 @@
   </div>
 </div>
 
-<div class="layer" *ngIf="cardLayer">
-  <div class="close" (click)="hideCardLayer()">schließen</div>
-  <div class="layer-card-list">
-    <div class="card-single-wrap" *ngFor="let playerCard of player.cards">
-      <app-card [card]="playerCard" [alwaysVisible]="true"></app-card>
+<div class="layer-wrap" *ngIf="cardLayer">
+  <div class="layer">
+    <div class="close" (click)="hideCardLayer()">schließen</div>
+    <div class="layer-card-list">
+      <div class="card-single-wrap" *ngFor="let playerCard of player.cards">
+        <app-card [card]="playerCard" [alwaysVisible]="true"></app-card>
+      </div>
     </div>
   </div>
 </div>
