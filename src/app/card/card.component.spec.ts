@@ -1,8 +1,8 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CardComponent} from './card.component';
-import {CardModule} from './card.module';
 import {Card} from './card';
+import {By} from '@angular/platform-browser';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -22,5 +22,33 @@ describe('CardComponent', () => {
     component = fixture.componentInstance;
     component.card = card;
     fixture.detectChanges();
+  });
+
+  it('should create an instance', () => {
+    expect(component).toBeDefined();
+  });
+
+  it('should contain a "0" when flipped', () => {
+    component.card.flipped = true;
+    fixture.detectChanges();
+
+    const element = fixture.debugElement.query(By.css('.front'));
+    expect(element.nativeElement.textContent).toContain('0');
+  });
+
+  it('should have a "opened"-class when flipped', () => {
+    component.card.flipped = true;
+    fixture.detectChanges();
+
+    const element = fixture.debugElement.query(By.css('.card'));
+    expect(element.nativeElement.className).toContain('opened');
+  });
+
+  it('should be invisible when removed', () => {
+    component.card.removed = true;
+    fixture.detectChanges();
+
+    const element = fixture.debugElement.query(By.css('.card'));
+    expect(element.nativeElement.className).toContain('removed');
   });
 });

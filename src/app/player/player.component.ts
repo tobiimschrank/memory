@@ -12,13 +12,13 @@ export class PlayerComponent implements OnInit {
   cardLayer: boolean = false;
 
   constructor() {
-    if (this.player === null) throw new Error('Attribute \'player\' is required');
   }
 
   /**
    *
    */
   ngOnInit() {
+    if (this.player === null) throw new Error('Attribute \'player\' is required');
   }
 
   /**

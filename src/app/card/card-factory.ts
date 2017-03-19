@@ -1,8 +1,8 @@
 import {Card} from './card';
 import {BeerCard} from './beer-card';
-import {BearCard} from './bear-card';
 import {FlickrCard} from './flickr-card';
 import {CageCard} from './cage-card';
+import {UnsplashCard} from './unsplash-card';
 
 export class CardFactory {
   /**
@@ -15,8 +15,8 @@ export class CardFactory {
     switch (type) {
       case 'beer':
         return new BeerCard(key);
-      case 'bear':
-        return new BearCard(key);
+      case 'unsplash':
+        return new UnsplashCard(key);
       case 'flickr':
         return new FlickrCard(key);
       case 'cage':

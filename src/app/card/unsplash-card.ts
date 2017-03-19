@@ -1,13 +1,13 @@
 import {ImageCard} from './image-card';
 
-export class BearCard extends ImageCard {
+export class UnsplashCard extends ImageCard {
   /**
    *
    * @param {number} key
    */
   constructor(key: number) {
     super(key);
-    this.content = 'https://placebear.com/' + (100 + key) + '/100';
+    this.content = 'https://unsplash.it/100?image=' + key;
 
     this.preload();
   }
