@@ -38,7 +38,7 @@
             <div *ngFor="let player of players">
                 <input class="player-name" [(ngModel)]="player.name" maxlength="12"/>
             </div>
-            <button class="btn add-player" (click)="addPlayer()" *ngIf="players.length < 10">Neuer Spieler</button>
+            <button class="btn add-player" (click)="addPlayer()" *ngIf="players.length < 9">Neuer Spieler</button>
             <button class="btn remove-player" (click)="removePlayer()" *ngIf="players.length > 2">Spieler entfernen
             </button>
         </fieldset>

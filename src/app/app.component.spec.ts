@@ -69,8 +69,8 @@ describe('PlayerComponent', () => {
     expect(element).not.toBeNull();
   });
 
-  it('should hide the add player button when 10 or more players exist', () => {
-    for (let i = 10; i--;) {
+  it('should hide the add player button when 9 or more players exist', () => {
+    for (let i = 9; i--;) {
       component.addPlayer();
     }
     fixture.detectChanges();
