@@ -1,6 +1,8 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FieldComponent} from './field.component';
+import {CardModule} from '../card/card.module';
+import {AppModule} from '../app.module';
 
 describe('FieldComponent', () => {
   let component: FieldComponent;
@@ -8,7 +10,7 @@ describe('FieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FieldComponent]
+      imports: [AppModule]
     })
       .compileComponents();
   }));
@@ -17,9 +19,5 @@ describe('FieldComponent', () => {
     fixture = TestBed.createComponent(FieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

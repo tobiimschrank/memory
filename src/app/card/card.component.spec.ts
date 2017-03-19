@@ -1,6 +1,8 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CardComponent} from './card.component';
+import {CardModule} from './card.module';
+import {Card} from './card';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -15,11 +17,10 @@ describe('CardComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    let card = new Card(0);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    component = fixture.componentInstance;
+    component.card = card;
+    fixture.detectChanges();
   });
 });

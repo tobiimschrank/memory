@@ -31,5 +31,6 @@ export class CardComponent implements OnInit {
    *
    */
   ngOnInit() {
+    if (this.card === null) throw new Error('Attribute \'card\' is required');
   }
 }

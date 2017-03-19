@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
 
     this._playerService.resetPlayers(hard);
     this._gameService.reset();
+    this.winnerNames = [];
 
     if (hard) {
       this._buildPlayers();

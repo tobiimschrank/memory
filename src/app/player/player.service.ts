@@ -13,7 +13,7 @@ export class PlayerService {
    * @param {string} name
    * @returns {Player}
    */
-  createPlayer(name: string = ''): Player {
+  createPlayer(name: string = 'Player'): Player {
     let newPlayer: Player = new Player(name);
     this._players.push(newPlayer);
 
@@ -90,12 +90,12 @@ export class PlayerService {
     let winners: string[] = [],
       highestPoints: number = 0;
 
-    for(let currentPlayer of this._players) {
-      if(highestPoints == currentPlayer.points) {
+    for (let currentPlayer of this._players) {
+      if (highestPoints == currentPlayer.points) {
         winners.push(currentPlayer.name);
-      }
-      if(highestPoints < currentPlayer.points) {
+      } else if (highestPoints < currentPlayer.points) {
         winners = [currentPlayer.name];
+        highestPoints = currentPlayer.points;
       }
     }
 

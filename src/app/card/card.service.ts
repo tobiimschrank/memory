@@ -7,6 +7,7 @@ export class CardService {
 
   _differentCards: number;
   _cards: Card[] = [];
+  _placedCount: number = 0;
 
   /**
    *
@@ -41,10 +42,6 @@ export class CardService {
    * @private
    */
   _cleanup(): void {
-    for (let card of this._cards) {
-      card.reset();
-    }
-
     this._cards = [];
   }
 
@@ -61,6 +58,10 @@ export class CardService {
    * @returns {Card}
    */
   getRandomCard(): Card {
+    if(this._placedCount == this._cards.length) {
+      throw new Error('all cards are placed');
+    }
+
     const random: number = Math.floor(Math.random() * this._cards.length);
     const card: Card = this._cards[random];
 
@@ -69,6 +70,7 @@ export class CardService {
     }
 
     card.placed = true;
+    this._placedCount++;
     return card;
   }
 }

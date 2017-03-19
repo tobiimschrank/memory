@@ -1,23 +1,28 @@
-<div class="player" [class.is-active]="player.isActive" >
-  <div class="points">
-    {{player.points}}
-  </div>
-  <div class="name">
-    {{player.name}}
-  </div>
-  <div class="card-list" (click)="showCardLayer()">
-    <div class="card-wrap" *ngFor="let playerCard of player.cards">
-      <app-card [card]="playerCard" [alwaysVisible]="true" [rotate]="true"></app-card>
+<div *ngIf="player">
+  <div class="player" [class.is-active]="player.isActive" >
+    <div class="points">
+      {{player.points}}
+    </div>
+    <div class="name">
+      {{player.name}}
+    </div>
+    <div class="card-list">
+      <div *ngIf="player.cards.length" (click)="showCardLayer()">
+        <div class="card-wrap" *ngFor="let playerCard of player.cards">
+          <app-card [card]="playerCard" [alwaysVisible]="true" [rotate]="true"></app-card>
+        </div>
+        <span class="card-opener">anzeigen</span>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="layer-wrap" *ngIf="cardLayer">
-  <div class="layer">
-    <div class="close" (click)="hideCardLayer()">schließen</div>
-    <div class="layer-card-list">
-      <div class="card-single-wrap" *ngFor="let playerCard of player.cards">
-        <app-card [card]="playerCard" [alwaysVisible]="true"></app-card>
+  <div class="layer-wrap" *ngIf="cardLayer">
+    <div class="layer">
+      <div class="close" (click)="hideCardLayer()">schließen</div>
+      <div class="layer-card-list">
+        <div class="card-single-wrap" *ngFor="let playerCard of player.cards">
+          <app-card [card]="playerCard" [alwaysVisible]="true"></app-card>
+        </div>
       </div>
     </div>
   </div>
