@@ -70,7 +70,7 @@ describe('PlayerComponent', () => {
   });
 
   it('should hide the add player button when 10 or more players exist', () => {
-    for(let i = 10; i--;) {
+    for (let i = 10; i--;) {
       component.addPlayer();
     }
     fixture.detectChanges();

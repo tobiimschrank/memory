@@ -10,11 +10,11 @@
             <div class="three-column">
                 <div class="field-wrap column">
                     <label for="rows">Zeilen</label>
-                    <input type="number" min="2" max="15" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/" />
+                    <input type="number" min="2" max="15" [(ngModel)]="rows" id="rows" pattern="/^[0-9]{1,7}/"/>
                 </div>
                 <div class="field-wrap column">
                     <label for="columns">Spalten</label>
-                    <input type="number" min="2" max="15" [(ngModel)]="columns" id="columns" />
+                    <input type="number" min="2" max="15" [(ngModel)]="columns" id="columns"/>
                 </div>
                 <div class="field-wrap column">
                     <label for="for-pair">Karten pro Paar</label>
@@ -36,10 +36,11 @@
         <fieldset>
             <legend>Spieler</legend>
             <div *ngFor="let player of players">
-                <input class="player-name" [(ngModel)]="player.name" maxlength="12" />
+                <input class="player-name" [(ngModel)]="player.name" maxlength="12"/>
             </div>
             <button class="btn add-player" (click)="addPlayer()" *ngIf="players.length < 10">Neuer Spieler</button>
-            <button class="btn remove-player" (click)="removePlayer()" *ngIf="players.length > 2">Spieler entfernen</button>
+            <button class="btn remove-player" (click)="removePlayer()" *ngIf="players.length > 2">Spieler entfernen
+            </button>
         </fieldset>
 
         <div class="button-wrap">

@@ -2,7 +2,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FieldComponent} from './field.component';
 import {CardModule} from '../card/card.module';
-import {AppModule} from '../app.module';
 import {CardService} from '../card/card.service';
 import {By} from '@angular/platform-browser';
 import {Card} from '../card/card';

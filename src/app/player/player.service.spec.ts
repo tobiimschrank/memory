@@ -36,7 +36,7 @@ describe('PlayerService', () => {
   });
 
   it('should create a list of 5 players', () => {
-    for(let i = 5;i--;) {
+    for (let i = 5; i--;) {
       service.createPlayer();
     }
 

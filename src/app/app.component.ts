@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
    * @param {boolean} hard
    */
   reset(hard: boolean = false): void {
+    console.log('reset', hard);
     if (hard) {
       this.forPair = 2;
       this.rows = 4;

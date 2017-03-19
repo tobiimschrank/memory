@@ -27,9 +27,11 @@ export class GameService {
   reset() {
     this._flippedCards = [];
     this._removedCards = [];
+    this._remainingTurns = 0;
   }
 
   /**
+   * starts the game
    *
    * @param {number} turns
    * @returns {Promise<boolean>}
@@ -46,7 +48,7 @@ export class GameService {
   }
 
   /**
-   *
+   * if pair was found the cards will be removed
    */
   removeCurrentCardsFromField(): void {
     for (let flippedCard of this._flippedCards) {
@@ -56,6 +58,7 @@ export class GameService {
   }
 
   /**
+   * user flipped a card, so it has to be flipped on field and be saved for use at end of turn
    *
    * @param {Card} card
    */
@@ -75,7 +78,7 @@ export class GameService {
   }
 
   /**
-   *
+   * return the cards, that were flipped in the last turn
    */
   hideFlippedCards(): void {
     for (let flippedCard of this._flippedCards) {
@@ -84,6 +87,7 @@ export class GameService {
   }
 
   /**
+   * generate a stack of cards to play with
    *
    * @param {number} perPair
    * @param {number} differentCards
@@ -103,6 +107,7 @@ export class GameService {
   }
 
   /**
+   * end the current turn and check for points for the current player or the end of the game
    *
    * @private
    */

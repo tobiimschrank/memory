@@ -16,6 +16,7 @@ export class CardService {
   }
 
   /**
+   * generates a stack of cards
    *
    * @param {number} forPair
    * @param {number} count
@@ -46,6 +47,7 @@ export class CardService {
   }
 
   /**
+   * returns the number of pairs in the stack
    *
    * @returns {number}
    */
@@ -54,11 +56,12 @@ export class CardService {
   }
 
   /**
+   * returns a random card from the stack, that is not placed at the field
    *
    * @returns {Card}
    */
   getRandomCard(): Card {
-    if(this._placedCount == this._cards.length) {
+    if (this._placedCount == this._cards.length) {
       throw new Error('all cards are placed');
     }
 

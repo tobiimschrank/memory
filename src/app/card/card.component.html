@@ -1,18 +1,20 @@
-<div class="card" [class.image]="card.type == 'image'" [class.opened]="card.flipped" [class.removed]="card.removed && !alwaysVisible" [class.player]="card.showAgain" [style]="(rotate ? stackRotate : '')">
-  <div class="card-inner">
-    <div class="flipper">
-      <div class="back"></div>
-      <div class="front">
-        <div class="card-content" *ngIf="card.flipped">
-          <div *ngIf="card.type == 'default'">
-            {{card.content}}
-          </div>
-          <div *ngIf="card.type == 'image'">
-            <img src="{{card.content}}" alt="" />
-            <span class="key">{{card.key}}</span>
-          </div>
+<div class="card" [class.image]="card.type == 'image'" [class.opened]="card.flipped"
+     [class.removed]="card.removed && !alwaysVisible" [class.player]="card.showAgain"
+     [style]="(rotate ? stackRotate : '')">
+    <div class="card-inner">
+        <div class="flipper">
+            <div class="back"></div>
+            <div class="front">
+                <div class="card-content" *ngIf="card.flipped">
+                    <div *ngIf="card.type == 'default'">
+                        {{card.content}}
+                    </div>
+                    <div *ngIf="card.type == 'image'">
+                        <img src="{{card.content}}" alt=""/>
+                        <span class="key">{{card.key}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

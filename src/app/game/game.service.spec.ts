@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {TestBed, inject} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {GameService} from './game.service';
 import {CardService} from '../card/card.service';
 import {PlayerService} from '../player/player.service';
