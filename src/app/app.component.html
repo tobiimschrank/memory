@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div *ngIf="gameRunning">
+    <div *ngIf="gameRunning && !gameEnded">
         <ul class="player-list">
             <li *ngFor="let player of players">
                 <app-player [player]="player"></app-player>

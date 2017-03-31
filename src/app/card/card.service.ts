@@ -27,6 +27,7 @@ export class CardService {
     this._differentCards = count / forPair;
     let cardFactory: CardFactory = new CardFactory();
 
+    this._placedCount = 0;
     this._cleanup();
 
     for (let i: number = this._differentCards; i--;) {
